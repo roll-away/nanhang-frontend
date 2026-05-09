@@ -1157,6 +1157,9 @@
       function getImprovementText() {
         const dist = state.distributed.avgLatency;
         const cent = state.centralized.avgLatency;
+        if (!state.distributed.done||!state.centralized.done) {
+          return '--';
+        }
         if (dist === null || cent === null || cent <= 0) {
           return '--';
         }

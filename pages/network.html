@@ -805,7 +805,7 @@
       <div style="position:absolute; top:63%; left:63%; transform:translateX(-50%); 
                   font-size:13px; font-weight:bold; color:#000; 
                   text-align:center; white-space:nowrap; transform: scale(1.33);">
-        区块链具有节点容错能<br>力，仍能发出认证反馈
+        区块链具有节点容错能<br>力，仍能发出认证反馈111222
       </div>
 
       <div style="position: absolute;
@@ -1261,12 +1261,6 @@
           setGauge(gauges.single, singleRate);
           setGauge(gauges.multi, multiRate);
 
-          if (singleRate !== null && multiRate !== null) {
-            setGauge(gauges.boost, Math.max(0, multiRate - singleRate));
-          } else {
-            setGauge(gauges.boost, null);
-          }
-
           updateMetrics(singleRate, multiRate);
           await sleep(STEP_DELAY_MS);
         }
@@ -1280,6 +1274,12 @@
 
         if (runMulti) {
           appendLog(multiLog, '[多模态] 测试完成，最终成功率 ' + finalMultiRate.toFixed(1) + '%');
+        }
+
+        if (finalSingleRate !== null && finalMultiRate !== null) {
+          setGauge(gauges.boost, Math.max(0, finalMultiRate - finalSingleRate));
+        } else {
+          setGauge(gauges.boost, null);
         }
 
         setControlState(false);
