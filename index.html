@@ -6,13 +6,13 @@
   <title>可信安全平台</title>
   <style>
     :root {
-      --bg-page: #f8fafc;
-      --bg-panel: #ffffff;
-      --border: #e5e7eb;
-      --text-main: #1f2937;
-      --text-sub: #6b7280;
-      --accent-soft: #ccfbf1;
-      --shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      --bg-page: #020617;
+      --bg-panel: rgba(2, 8, 23, 0.9);
+      --border: rgba(34, 211, 238, 0.36);
+      --text-main: #dbeafe;
+      --text-sub: #93c5fd;
+      --accent-soft: rgba(20, 184, 166, 0.22);
+      --shadow: 0 0 32px rgba(34, 211, 238, 0.22);
     }
 
     * {
@@ -24,9 +24,12 @@
       min-height: 100vh;
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
       background:
-        radial-gradient(circle at 10% 10%, #eef6ff 0%, rgba(238, 246, 255, 0) 45%),
-        radial-gradient(circle at 90% 90%, #f2fcfa 0%, rgba(242, 252, 250, 0) 40%),
+        radial-gradient(circle at 10% 10%, rgba(34, 211, 238, 0.18) 0%, transparent 36%),
+        radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.18) 0%, transparent 38%),
+        linear-gradient(rgba(34, 211, 238, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.055) 1px, transparent 1px),
         var(--bg-page);
+      background-size: auto, auto, 34px 34px, 34px 34px, auto;
       color: var(--text-main);
     }
 
@@ -37,6 +40,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
       display: grid;
       grid-template-columns: 1fr 8fr;
       height: calc(95vh - 53.2px);
@@ -46,7 +50,7 @@
     .sidebar {
       border-right: 1px solid var(--border);
       padding: 20px 16px;
-      background: #fcfdff;
+      background: rgba(2, 8, 23, 0.82);
     }
 
     .brand {
@@ -67,7 +71,7 @@
     .subnav {
       margin-top: 6px;
       padding-left: 10px;
-      border-left: 1px dashed #d1d5db;
+      border-left: 1px dashed rgba(125, 211, 252, 0.32);
       display: none;
     }
 
@@ -98,20 +102,21 @@
       font-size: 14px;
       padding: 8px 10px;
       margin-top: 6px;
-      color: #374151;
+      color: #bfdbfe;
     }
 
     .nav-button:hover,
     .subnav-button:hover {
-      background: #f3f4f6;
-      border-color: #e5e7eb;
+      background: rgba(14, 165, 233, 0.16);
+      border-color: rgba(34, 211, 238, 0.38);
     }
 
     .nav-button.is-active,
     .subnav-button.is-active {
       background: var(--accent-soft);
-      border-color: #99f6e4;
-      color: #0f5250;
+      border-color: #2dd4bf;
+      color: #ecfeff;
+      box-shadow: 0 0 14px rgba(45, 212, 191, 0.26);
     }
 
     .content {
@@ -127,8 +132,9 @@
       min-height: 0;
       border: 1px solid var(--border);
       border-radius: 12px;
-      background: #ffffff;
+      background: rgba(2, 8, 23, 0.88);
       overflow: hidden;
+      box-shadow: inset 0 0 28px rgba(34, 211, 238, 0.08);
     }
 
     .content-frame {
@@ -137,7 +143,7 @@
       width: 100%;
       height: 100%;
       border: 0;
-      background: #ffffff;
+      background: #020617;
       display: none;
     }
 
@@ -209,25 +215,25 @@
           class="content-frame"
           data-page="certification"
           title="可信安全认证页面"
-          src="pages/certification.html?v=20260414-logstyle-bordergray"
+          src="pages/certification.html?v=20260511-tech-theme-readable"
         ></iframe>
         <iframe
           class="content-frame"
           data-page="physical"
           title="物理层方案"
-          src="pages/physical.html?v=20260418-physical-layout-sync-2"
+          src="pages/physical.html?v=20260511-tech-theme-readable"
         ></iframe>
         <iframe
           class="content-frame"
           data-page="network"
           title="网络层方案"
-          src="pages/network.html?v=20260414-logstyle-bordergray"
+          src="pages/network.html?v=20260511-tech-theme-readable"
         ></iframe>
         <iframe
           class="content-frame"
           data-page="defense"
           title="抗攻击能力"
-          src="pages/defense.html?v=20260414-logstyle-bordergray"
+          src="pages/defense.html?v=20260512-defense-top-title-bold"
         ></iframe>
       </div>
     </section>

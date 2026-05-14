@@ -550,6 +550,88 @@
         gap: 10px;
       }
     }
+    /* 全站科技风主题覆盖：深色背景、青蓝光效、终端化日志 */
+    body {
+      background:
+        radial-gradient(circle at 12% 16%, rgba(34, 211, 238, 0.16), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(59, 130, 246, 0.16), transparent 32%),
+        linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+        #020617;
+      background-size: auto, auto, 34px 34px, 34px 34px, auto;
+      color: #dbeafe;
+    }
+
+    .page,
+    .section {
+      background: transparent !important;
+    }
+
+    .section + .section {
+      border-top-color: rgba(125, 211, 252, 0.28);
+    }
+
+    .diagram-panel,
+    .controls,
+    .log-box {
+      background: rgba(2, 8, 23, 0.88) !important;
+      border: 1px solid rgba(34, 211, 238, 0.36) !important;
+      box-shadow: inset 0 0 24px rgba(34, 211, 238, 0.08), 0 0 22px rgba(14, 165, 233, 0.16) !important;
+      backdrop-filter: blur(10px);
+    }
+
+    .canvas {
+      background-color: transparent !important;
+    }
+
+    .panel-header,
+    .action-btn {
+      background: linear-gradient(135deg, #0f766e, #0ea5e9) !important;
+      color: #ecfeff !important;
+      border-color: rgba(45, 212, 191, 0.72) !important;
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.24);
+    }
+
+    .input-row label,
+    .status,
+    .log-title,
+    .log-metric {
+      color: #dbeafe !important;
+      fill: #dbeafe !important;
+      text-shadow: 0 0 7px rgba(34, 211, 238, 0.42);
+    }
+
+    .canvas div[style],
+    svg text {
+      color: #0f172a !important;
+      fill: #0f172a !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .status,
+    .log-title,
+    .log-metric {
+      color: #67e8f9 !important;
+    }
+
+    .count-input,
+    .time-input {
+      background: rgba(2, 6, 23, 0.86) !important;
+      border-color: rgba(125, 211, 252, 0.45) !important;
+      color: #e0f2fe !important;
+    }
+
+    .log-content {
+      color: #93c5fd !important;
+    }
+
+    .log-title {
+      border-bottom-color: rgba(125, 211, 252, 0.24) !important;
+    }
+
+    .log-metric {
+      border-top-color: rgba(125, 211, 252, 0.28) !important;
+    }
   </style>
 </head>
 <body>

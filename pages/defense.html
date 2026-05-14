@@ -17,71 +17,138 @@
     body {
       margin: 0;
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-      background: #ffffff;
-      color: #0f172a;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(34, 211, 238, 0.18), transparent 28%),
+        radial-gradient(circle at 88% 12%, rgba(59, 130, 246, 0.18), transparent 30%),
+        linear-gradient(135deg, #020617 0%, #08111f 48%, #020617 100%);
+      color: #dbeafe;
       overflow: auto;
     }
 
+    /* 页面整体四宫格：左上流程图、右上攻击示意图、左下测试控制、右下日志终端 */
     .page {
       height: 100%;
       display: grid;
-      grid-template-rows: 3fr 2fr;
-      gap: 0;
-    }
-
-    .image-wrap {
-      display: grid;
-      gap: 20px;
+      grid-template-columns: minmax(0, 0.48fr) minmax(0, 0.52fr);
+      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        "flow image"
+        "controls logs";
+      gap: 14px;
       padding: 6px 16px;
-      background: #f0f4f8;
-      height: 100%; /* 确保填满 grid 容器的第一行 */
+      background:
+        linear-gradient(rgba(34, 211, 238, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.055) 1px, transparent 1px),
+        radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12), transparent 38%),
+        #020617;
+      background-size: 34px 34px, 34px 34px, auto, auto;
+      overflow: hidden;
     }
 
-    .canvas {
-      background: #ffffff;
+    /* 右上角攻击示意图所在网格 */
+    .image-wrap {
+      grid-area: image;
       position: relative;
-      overflow: hidden;
-      display: flex;
-      gap: 80px;
+      z-index: 2;
+      display: grid;
+      align-items: start;
+      justify-items: end;
+      height: 100%;
+      min-height: 0;
+      overflow: visible;
+      background: transparent;
+      padding: 0;
+    }
+
+    /* 右上角攻击示意图外层定位容器 */
+    .canvas {
+      position: relative;
+      overflow: visible;
+      display: grid;
+      align-items: start;
+      justify-items: end;
+      width: 100%;
+      height: 100%;
+      background: transparent;
       /* padding: 0 20px; */
     }
 
+    /* 右上角攻击示意图缩放画布：内部所有元素跟随该画布整体缩放 */
+    .canvas-scale {
+      --defense-image-scale: 0.6;
+      --defense-image-width: 1600px;
+      --defense-image-height: 720px;
+      background:
+        linear-gradient(rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 165, 233, 0.08) 1px, transparent 1px),
+        radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.16), transparent 46%),
+        #07111f;
+      background-size: 32px 32px, 32px 32px, auto, auto;
+      position: absolute;
+      top: 0;
+      right: 0;
+      overflow: hidden;
+      display: flex;
+      gap: 80px;
+      width: var(--defense-image-width);
+      height: var(--defense-image-height);
+      flex: none;
+      transform: scale(var(--defense-image-scale));
+      transform-origin: top right;
+    }
+
+    /* 右上攻击示意图左侧：自私接入攻击流程示意 */
     .left-area {
       flex: 1; 
       height: 100%; 
-      background: #ffffff; 
+      background:
+        radial-gradient(circle at 30% 20%, rgba(34, 211, 238, 0.18), transparent 34%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.96));
       position: relative;
       border-radius: 12px;
-      border: 1px solid #d1d5db; 
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.46);
+      box-shadow: inset 0 0 24px rgba(56, 189, 248, 0.12), 0 0 18px rgba(14, 165, 233, 0.18);
     }
 
+    /* 右上攻击示意图右侧：高频重接入攻击流程示意 */
     .right-area {
       flex: 1; 
       height: 100%; 
-      background: #ffffff; 
+      background:
+        radial-gradient(circle at 70% 18%, rgba(34, 211, 238, 0.18), transparent 34%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.96));
       position: relative;
       border-radius: 12px;
-      border: 1px solid #d1d5db; 
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.46);
+      box-shadow: inset 0 0 24px rgba(56, 189, 248, 0.12), 0 0 18px rgba(14, 165, 233, 0.18);
+    }
+
+    .left-area div[style],
+    .right-area div[style] {
+      color: #e0f2fe !important;
+      text-shadow:
+        0 1px 2px rgba(2, 6, 23, 0.95),
+        0 0 10px rgba(34, 211, 238, 0.72);
     }
     
 
+    /* 自私接入攻击示意图标题条 */
     .area-title1 {
-      background: linear-gradient(to right, #2b4c7e, #567ebb);
-      color: white;
+      background: linear-gradient(90deg, #0f766e, #0ea5e9);
+      color: #ecfeff;
       padding: 8px 16px;
-      font-weight: bold;
+      font-weight: 900;
       font-size: 18px;
       border-radius: 10px 10px 0 0;
       margin: 4px;
     }
 
+    /* 高频重接入攻击示意图标题条 */
     .area-title2 {
-      background: linear-gradient(to right, #2b4c7e, #567ebb);
-      color: white;
+      background: linear-gradient(90deg, #0f766e, #0ea5e9);
+      color: #ecfeff;
       padding: 8px 16px;
-      font-weight: bold;
+      font-weight: 900;
       font-size: 18px;
       border-radius: 10px 10px 0 0;
       margin: 4px;
@@ -94,12 +161,12 @@
 
     /* 成功连线样式*/
     .m-line-success {
-      stroke: #64748b;
+      stroke: #38bdf8;
       stroke-width: 1;
     }
 
     .m-line-connect {
-      stroke: #000;
+      stroke: #dbeafe;
       stroke-width: 1;
     }
 
@@ -152,56 +219,66 @@
       background: #ffffff;
     }
 
+    /* 下方结构容器：使用 display: contents 让子模块直接进入四宫格 */
     .bottom-layout {
       min-height: 0;
-      display: grid;
+      display: contents;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
     }
 
+    /* 左侧逻辑容器：不显示自身外框，只承载控制框和流程框 */
     .left-panel {
-      border: 1px solid #e5e7eb;
-      /* border: 2px solid #000 ; */
-      border-radius: 10px;
-      /* background: #f9fafb; */
-      height : 100%;
-      min-height: 0;
-      padding: 6px 16px;
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: 0px;
+      display: contents;
     }
 
+    /* 左下测试控制框：按钮、测试次数、重接入间隔、黑名单 */
     .controls {
+      grid-area: controls;
+      width: 92%;
+      justify-self: start;
+      border: 1px solid rgba(34, 211, 238, 0.36);
+      border-radius: 10px;
       /* border: 1px solid #d1d5db; */
-      background: #ffffff;
-      padding: 8px 20px;
+      background: rgba(3, 12, 28, 0.86);
+      padding: 6px 14px;
       display: grid;
-      gap:10px;
-      min-height: 124px;
+      grid-template-rows: auto auto 1fr;
+      gap: 7px;
+      min-height: 0;
+      overflow: visible;
+      box-shadow: inset 0 0 24px rgba(34, 211, 238, 0.08), 0 0 20px rgba(14, 165, 233, 0.14);
     }
 
+    /* 两个攻击测试开始按钮所在行 */
     .btn-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 8px;
+      padding: 10px 6px 0;
     }
 
     .action-btn {
-      border: 1px solid #0f5f82;
-      border-radius: 8px;
-      background: #186487;
-      color: #ffffff;
-      font-size: 18px;
-      font-weight: 600;
-      padding: 3px 8px;
+      border: 1px solid rgba(45, 212, 191, 0.85);
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.96), rgba(14, 165, 233, 0.94)),
+        radial-gradient(circle at 20% 0%, rgba(236, 254, 255, 0.32), transparent 42%);
+      color: #ecfeff;
+      font-size: 17px;
+      font-weight: 800;
+      min-height: 52px;
+      padding: 10px 10px;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.05em;
+      text-shadow: 0 1px 2px rgba(2, 6, 23, 0.72), 0 0 10px rgba(224, 242, 254, 0.3);
+      box-shadow: inset 0 0 18px rgba(224, 242, 254, 0.12), 0 0 12px rgba(14, 165, 233, 0.2);
     }
 
     .action-btn:hover:not(:disabled) {
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(24, 100, 135, 0.24);
+      box-shadow: 0 0 18px rgba(34, 211, 238, 0.42);
     }
 
     .action-btn:disabled {
@@ -211,80 +288,206 @@
       box-shadow: none;
     }
 
+    /* 测试参数输入行和黑名单状态区 */
     .input-row {
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 7px;
       flex-wrap: wrap;
+      padding: 0 6px;
+    }
+
+    .parameter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      width: 70%;
     }
 
     .input-row label {
       font-size: 15px;
-      font-weight: 600;
-      color: #334155;
+      font-weight: 800;
+      color: #dff7ff;
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 8px rgba(34, 211, 238, 0.28);
     }
 
+    /* 无人机设备 ID 黑名单显示区 */
     .blacklist-area {
-        margin-left: auto;
-        display: flex;
+        margin: 8px 0 0;
+        width: 148%;
+        max-width: 148%;
+        min-height: 124px;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) auto;
+        grid-template-rows: 42px minmax(62px, 1fr);
         align-items: center;
-        gap: 8px;
-        padding: 6px 14px;
-        background: #fef2f2;
-        border-radius: 24px;
-        border: 1px solid #fecaca;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        gap: 8px 10px;
+        padding: 9px 13px;
+        background:
+          linear-gradient(135deg, rgba(127, 29, 29, 0.32), rgba(15, 23, 42, 0.9)),
+          radial-gradient(circle at 0% 0%, rgba(248, 113, 113, 0.2), transparent 46%);
+        border-radius: 18px;
+        border: 1px solid rgba(248, 113, 113, 0.58);
+        box-shadow:
+          inset 0 0 26px rgba(248, 113, 113, 0.08),
+          0 0 18px rgba(239, 68, 68, 0.2);
 
         overflow: visible;
         contain: layout paint;
+        z-index: 3;
+    }
+
+    .blacklist-summary {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "icon title"
+        "count title";
+      align-items: center;
+      column-gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(2, 6, 23, 0.5);
+      border: 1px solid rgba(248, 113, 113, 0.28);
+    }
+
+    .blacklist-icon {
+      grid-area: icon;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(220, 38, 38, 0.22);
+      box-shadow: inset 0 0 12px rgba(248, 113, 113, 0.2);
     }
 
     .blacklist-label {
-        font-weight: bold;
-        color: #dc2626;
-        font-size: 15px;
-        text-align: center;
+        font-weight: 900;
+        color: #fecaca;
+        font-size: 21px;
+        line-height: 1.25;
+        text-align: left;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+        text-shadow: 0 1px 2px rgba(15, 23, 42, 0.72), 0 0 10px rgba(248, 113, 113, 0.24);
+        padding: 0;
+        background: transparent;
+        border: 0;
+    }
+
+    .blacklist-area > .blacklist-label:first-child {
+        grid-column: 1;
+        grid-row: 1;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        font-size: 22px;
+        padding: 0;
+        background: rgba(220, 38, 38, 0.22);
+        box-shadow: inset 0 0 12px rgba(248, 113, 113, 0.2);
+    }
+
+    .blacklist-area > .blacklist-label:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        min-height: 42px;
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        border: 0;
     }
 
     .blacklist-count {
-        background: #dc2626;
-        color: white;
-        border-radius: 20px;
-        min-width: 28px;
-        height: 28px;
+      grid-column: 3;
+      grid-row: 1;
+      align-self: center;
+      justify-self: end;
+      margin: 0;
+      background: #dc2626;
+      color: white;
+      border-radius: 14px;
+      min-width: 48px;
+      height: 34px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        font-size: 15px;
+        font-size: 20px;
         padding: 0 8px;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        text-shadow: 0 1px 2px rgba(127, 29, 29, 0.72);
+        box-shadow: 0 0 14px rgba(220, 38, 38, 0.42);
     }
 
     .blacklist-select {
-      margin-left: 8px;
-      font-size: 12px;
-      color: #7f1d1d;
-      max-width: 320px;
-      min-width: 160px;
-      max-height: 120px;
+      grid-column: 1 / 4;
+      grid-row: 2;
+      margin-left: 0;
+      font-size: 17px;
+      color: #fecaca;
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      min-height: 62px;
+      max-height: 150px;
       overflow-y: auto;
-      border: 1px solid #fecaca;
-      border-radius: 6px;
-      padding: 4px 6px;
-      background: #ffffff;
+      border: 1px solid rgba(248, 113, 113, 0.42);
+      border-radius: 14px;
+      padding: 8px;
+      background: rgba(2, 6, 23, 0.56);
+      outline: none;
       -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 8px;
     }
 
+    .blacklist-id-chip,
+    .blacklist-empty {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .blacklist-id-chip {
+      color: #fee2e2;
+      background:
+        linear-gradient(135deg, rgba(127, 29, 29, 0.95), rgba(220, 38, 38, 0.34)),
+        radial-gradient(circle at 15% 0%, rgba(254, 202, 202, 0.24), transparent 46%);
+      border: 1px solid rgba(248, 113, 113, 0.72);
+      box-shadow: inset 0 0 10px rgba(254, 202, 202, 0.08), 0 0 10px rgba(220, 38, 38, 0.28);
+    }
+
+    .blacklist-empty {
+      color: rgba(254, 202, 202, 0.58);
+      border: 1px dashed rgba(248, 113, 113, 0.34);
+      background: rgba(15, 23, 42, 0.42);
+    }
+
+    /* 数字输入框：测试次数和重接入间隔共用 */
     .count-input {
       width: 100%;
       max-width: 100%;
-      height: 28px;
-      border: 1px solid #cbd5e1;
+      height: 32px;
+      border: 1px solid rgba(125, 211, 252, 0.45);
       border-radius: 8px;
-      background: #ffffff;
-      color: #0f172a;
-      font-size: 13px;
+      background: rgba(2, 6, 23, 0.86);
+      color: #e0f2fe;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
       padding: 0 34px 0 10px;
       outline: none;
       appearance: textfield;
@@ -301,19 +504,20 @@
       position: relative;
       width: 205px;
       max-width: 100%;
-      height: 28px;
+      height: 32px;
     }
 
     .time-input-wrap {
-      width: 60px;
+      width: 86px;
       max-width: 100%;
     }
 
     .time-input {
-      height : 20px;
+      height : 24px;
       padding-right: 10px;
     }
 
+    /* 测试次数输入框右侧上下箭头容器 */
     .count-stepper {
       position: absolute;
       right: 4px;
@@ -326,10 +530,10 @@
     }
 
     .count-step-btn {
-      border: 1px solid #cbd5e1;
+      border: 1px solid rgba(125, 211, 252, 0.45);
       border-radius: 4px;
-      background: #f8fafc;
-      color: #334155;
+      background: rgba(15, 23, 42, 0.95);
+      color: #bae6fd;
       font-size: 10px;
       line-height: 1;
       padding: 0;
@@ -339,9 +543,9 @@
     }
 
     .count-step-btn:hover:not(:disabled) {
-      background: #eef2ff;
-      border-color: #93c5fd;
-      color: #1d4ed8;
+      background: rgba(14, 165, 233, 0.2);
+      border-color: #22d3ee;
+      color: #67e8f9;
     }
 
     .count-step-btn:disabled {
@@ -350,15 +554,23 @@
     }
 
     .count-input:focus {
-      border-color: #0f766e;
-      box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.14);
+      border-color: #22d3ee;
+      box-shadow: 0 0 0 2px rgba(34, 211, 238, 0.18);
     }
 
+    /* 当前测试状态提示文本 */
     .status {
       margin: 0;
-      font-size: 15px;
-      color: #1d4ed8;
-      font-weight: 600;
+      font-size: 19px;
+      color: #cffafe;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 10px rgba(34, 211, 238, 0.42);
+      background: rgba(8, 47, 73, 0.28);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 11px 16px;
       min-height: 0;
       flex: 1 1 auto;
       white-space: nowrap;
@@ -366,120 +578,179 @@
       text-overflow: ellipsis;
     }
 
+    /* 左上流程图外部框 */
     .flow-area {
+      grid-area: flow;
+      position: relative;
+      z-index: 1;
+      border: 1px solid #e5e7eb;
       /* border: 1px solid #d1d5db; */
-      border-radius: 8px;
-      background: #ffffff;
-      padding:3px 8px;
+      border-radius: 10px;
+      background: rgba(2, 8, 23, 0.92);
+      border: 1px solid rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 28px rgba(34, 211, 238, 0.22);
+      padding: 10px;
       display: grid;
-      align-content: start;
-      overflow: visible;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 8px;
+      align-content: stretch;
+      overflow: hidden;
       min-height: 0;
+      width: 70%;
+      height: 100%;
+      align-self: center;
+      justify-self: start;
     }
 
+    /* 流程 SVG 的自适应包裹容器 */
     .flow-wrap {
       border: 0;
       border-radius: 0;
       background: transparent;
       padding: 0;
-      overflow: visible;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
       display: flex;
-      justify-content: flex-start;
+      align-items: center;
+      justify-content: center;
     }
 
+    .flow-demo-title {
+      margin: 0;
+      color: #67e8f9;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      line-height: 1.2;
+      text-shadow: 0 0 8px rgba(34, 211, 238, 0.55);
+    }
+
+    /* 左上流程 SVG：随外部框大小自适应 */
     .flow-svg {
       width: 100%;
-      height: auto;
-      aspect-ratio: 900 / 260;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      aspect-ratio: 620 / 360;
+    }
+
+    .flow-wrap .flow-svg + .flow-svg {
+      display: none;
+    }
+
+    .flow-card-bg {
+      fill: rgba(15, 23, 42, 0.62);
+      stroke: rgba(56, 189, 248, 0.24);
+      stroke-width: 1.5;
+      filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.16));
+    }
+
+    .flow-card-accent {
+      fill: rgba(34, 211, 238, 0.12);
     }
 
     .flow-base {
       fill: none;
-      stroke: #8ab8de;
-      stroke-width: 16;
+      stroke: rgba(125, 211, 252, 0.58);
+      stroke-width: 11;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
     .flow-active {
       fill: none;
-      stroke: #2563eb;
-      stroke-width: 24;
+      stroke: #22d3ee;
+      stroke-width: 15;
       stroke-linecap: round;
       stroke-linejoin: round;
-      filter: drop-shadow(0 0 4px rgba(37, 99, 235, 0.6));
+      filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.72));
     }
 
     .flow-node {
-      fill: #ffffff;
-      stroke: #93a4b5;
+      fill: #020617;
+      stroke: #7dd3fc;
       stroke-width: 3;
       transition: fill 0.3s ease, stroke 0.3s ease, r 0.3s ease;
     }
 
     .flow-node.is-visited {
-      fill: #ffffff;
-      stroke: #2563eb;
+      fill: #082f49;
+      stroke: #22d3ee;
     }
 
     .flow-node.is-active {
-      fill: #ffffff;
-      stroke: #1d4ed8;
+      fill: #083344;
+      stroke: #67e8f9;
       stroke-width: 4;
     }
 
     .flow-label {
-      fill: #111827;
-      font-size: 24px;
-      font-weight: 600;
+      fill: #e0f2fe;
+      font-size: 20px;
+      font-weight: 800;
       user-select: none;
     }
 
     .flow-label-small {
-      fill: #111827;
-      font-size: 19px;
-      font-weight: 600;
+      fill: #e0f2fe;
+      font-size: 18px;
+      font-weight: 800;
       user-select: none;
     }
 
     .flow-label-long {
-      fill: #111827;
+      fill: #e0f2fe;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       user-select: none;
     }
 
     .flow-heading {
-      fill: #1d9bf0;
+      fill: #22d3ee;
+      filter: drop-shadow(0 0 5px rgba(34, 211, 238, 0.52));
     }
 
+    /* 右下日志区域：攻击分析日志和处置记录日志 */
     .right-panel {
+      grid-area: logs;
+      width: calc(100% + 8%);
+      margin-left: -8%;
       min-height: 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
 
+    /* 单个命令行日志卡片 */
     .log-box {
-      border: 1px solid #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.28);
       border-radius: 10px;
-      background: #ffffff;
-      color: #3b82f6;
+      background:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.96)),
+        radial-gradient(circle at 0% 0%, rgba(251, 191, 36, 0.08), transparent 36%);
+      color: #dbeafe;
       padding: 10px;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
       gap: 8px;
       min-height: 0;
       overflow: hidden;
+      box-shadow:
+        inset 0 0 22px rgba(15, 23, 42, 0.88),
+        0 0 18px rgba(15, 23, 42, 0.36);
       font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
     .log-title {
       margin: 0;
       font-size: 15px;
-      color: #3b82f6;
-      border-bottom: 1px solid #e5e7eb;
+      color: #fde68a;
+      border-bottom: 1px solid rgba(251, 191, 36, 0.24);
       padding-bottom: 8px;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.24);
     }
 
     .log-content {
@@ -487,7 +758,7 @@
       padding: 0;
       list-style: none;
       font-size: 12px;
-      color: #3b82f6;
+      color: #cbd5e1;
       line-height: 1.6;
       overflow-y: auto;
       overflow-x: hidden;
@@ -502,29 +773,70 @@
       align-items: flex-start;
     }
 
+    .log-line {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .log-time {
+      color: #7dd3fc;
+      text-shadow: 0 0 8px rgba(125, 211, 252, 0.24);
+    }
+
+    .log-device {
+      color: #fde68a;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.2);
+    }
+
+    .log-message {
+      color: #dbeafe;
+    }
+
     .dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #3b82f6;
+      background: #fbbf24;
       margin-top: 6px;
       flex: 0 0 auto;
-      box-shadow: 0 0 6px rgba(59, 130, 246, 0.75);
+      box-shadow: 0 0 8px rgba(251, 191, 36, 0.8);
     }
 
     .log-metric {
       margin: 0;
       padding-top: 6px;
-      border-top: 1px dashed rgba(148, 163, 184, 0.45);
+      border-top: 1px dashed rgba(251, 191, 36, 0.28);
       font-size: 12px;
       font-weight: 700;
-      color: #3b82f6;
+      color: #93c5fd;
       line-height: 1.4;
     }
 
     @media (max-width: 980px) {
-      .bottom-layout {
+      .page {
         grid-template-columns: 1fr;
+        grid-template-rows: minmax(220px, auto) minmax(260px, auto) minmax(220px, auto) minmax(320px, auto);
+        grid-template-areas:
+          "flow"
+          "image"
+          "controls"
+          "logs";
+        height: auto;
+        min-height: 100%;
+        overflow: auto;
+      }
+
+      .canvas-scale {
+        width: 100%;
+        height: 100%;
+        transform: none;
+      }
+
+      .bottom-layout {
+        display: contents;
       }
 
       .right-panel {
@@ -567,17 +879,34 @@
         font-size: 14px;
       }
     }
+    /* 全站科技风主题收口：统一本页和其他页面的深色视觉参数 */
+    .controls,
+    .flow-area,
+    .log-box,
+    .canvas-scale {
+      backdrop-filter: blur(10px);
+    }
+
+    .section + .section {
+      border-top-color: rgba(125, 211, 252, 0.28);
+    }
   </style>
 </head>
 <body>
+  <!-- 页面主体：抗攻击能力四宫格布局 -->
   <main class="page">
+  <!-- 右上区域：攻击防御示意图容器 -->
   <div class="image-wrap">
+    <!-- 示意图定位层：负责把缩放画布放到右上角 -->
     <div class="canvas">
+      <!-- 示意图缩放层：左右攻击图、箭头、区块链底图整体缩放 -->
+      <div class="canvas-scale">
 
       <!-- 左侧区域：标题1 -->
+      <!-- 自私接入攻击示意区域 -->
       <div class="left-area">
         <div class="area-title1">自私接入攻击</div>
-        <img src="../assets/sec-uav.png" class="element" style="position: absolute; top:12%; left:43%; width:210px;" alt="UAV"/>
+        <img src="../assets/sec-uav.png" class="element" style="position: absolute; top:12%; left:25%; width:210px;" alt="UAV"/>
 
         <img src="../assets/接入点.png" class="element" style="position: absolute; top:44%; left:15%; width:130px;" alt="接入点">
         <img src="../assets/sec-pass.png" class="element" style="position: absolute; top:28%; right:10%; width:105px;" alt="pass">
@@ -614,6 +943,7 @@
       </div>
 
       <!-- 右侧区域：标题2 -->
+      <!-- 高频重接入攻击示意区域 -->
       <div class="right-area">
         <div class="area-title2">高频重接入攻击</div>
         
@@ -645,6 +975,7 @@
         </div>
       </div>
 
+<!-- 右上攻击示意图连线层：用 SVG 画虚线箭头和攻击路径 -->
 <svg class="connection-svg" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none;" viewBox="0 0 100 100">
   <defs>
     <marker id="arrow1" markerWidth="1.5" markerHeight="3" refX="1" refY="1.5" orient="auto">
@@ -706,20 +1037,29 @@
 </svg>
 
       <img src="../assets/sec-blockchain.png" class="element" style="position: absolute; bottom:0%; left:50%;transform: translateX(-50%) scaleX(0.9);" alt="区块链">
+      </div>
     </div>
 </div>
 
+    <!-- 其余三块模块的结构容器：实际位置由 CSS grid-area 决定 -->
     <section class="bottom-layout">
+      <!-- 左侧逻辑容器：包含测试控制框和流程 SVG 框 -->
       <article class="left-panel">
+        <!-- 左下控制框：测试按钮、输入参数、黑名单 -->
         <div class="controls">
+          <!-- 攻击测试按钮行 -->
           <div class="btn-row">
             <button class="action-btn" id="selfish-btn" type="button">自私接入攻击测试</button>
             <button class="action-btn" id="highfreq-btn" type="button">高频重接入攻击测试</button>
           </div>
+          <!-- 测试参数行：次数、重接入间隔、黑名单 -->
           <div class="input-row">
-            <div style="display:flex; flex-direction:column; gap:9px;">
+            <!-- 左侧输入参数组 -->
+            <div class="parameter-group">
+              <!-- 接入攻击测试次数输入项 -->
               <div style="display:flex; align-items:center; gap:8px;">
                 <label for="test-count">接入攻击测试次数</label>
+                <!-- 带上下箭头的测试次数输入框 -->
                 <div class="count-input-wrap">
                   <input id="test-count" class="count-input" type="number" min="5" max="10" value="5">
                   <div class="count-stepper">
@@ -728,6 +1068,7 @@
                   </div>
                 </div>
               </div>
+              <!-- 高频重接入间隔输入项 -->
               <div style="display:flex; align-items:center; gap:8px;">
                 <label for="highfreq-interval">重接入间隔(ms)</label>
                 <div class="time-input-wrap">
@@ -737,26 +1078,75 @@
               </div>
               <p class="status" id="status-text">等待开始测试...</p>
             </div>
+            <!-- 黑名单显示区域 -->
             <div class="blacklist-area">
               <span class="blacklist-label">🚫</span>
-              <span class="blacklist-label">无人机设备<br>ID黑名单</span>
+              <span class="blacklist-label">无人机设备ID黑名单</span>
               <span class="blacklist-count" id="blacklist-count">0</span>
-              <select id="blacklist-select" class="blacklist-select" size="4"></select>
+              <div id="blacklist-select" class="blacklist-select" role="list"></div>
             </div>
           </div>
         </div>
 
+        <!-- 左上流程图外框 -->
         <div class="flow-area">
+          <h3 class="flow-demo-title">流程演示</h3>
+          <!-- 流程 SVG 自适应容器 -->
           <div class="flow-wrap">
-            <svg class="flow-svg" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg" aria-label="攻击处置流程图">
+            <svg class="flow-svg" viewBox="0 0 620 360" xmlns="http://www.w3.org/2000/svg" aria-label="攻击处置流程图">
+              <defs>
+                <linearGradient id="flow-card-glow" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#0f172a" stop-opacity="0.95" />
+                  <stop offset="58%" stop-color="#082f49" stop-opacity="0.62" />
+                  <stop offset="100%" stop-color="#111827" stop-opacity="0.9" />
+                </linearGradient>
+              </defs>
+
+              <rect class="flow-card-bg" x="16" y="12" width="588" height="154" rx="18" />
+              <rect class="flow-card-accent" x="16" y="12" width="5" height="154" rx="2.5" />
+              <text class="flow-label flow-heading" x="34" y="42">自私接入攻击流程</text>
+              <text class="flow-label-long" x="34" y="66">设备身份异常时，接入点查询链上身份并写入黑名单。</text>
+              <path class="flow-base" d="M68 104 L560 104" />
+              <path id="selfish-seg-0" class="flow-active" d="M68 104 L174 104" />
+              <path id="selfish-seg-1" class="flow-active" d="M174 104 L326 104" />
+              <path id="selfish-seg-2" class="flow-active" d="M326 104 L456 104" />
+              <path id="selfish-seg-3" class="flow-active" d="M456 104 L560 104" />
+              <circle id="selfish-node-0" class="flow-node" cx="174" cy="104" r="10" />
+              <circle id="selfish-node-1" class="flow-node" cx="326" cy="104" r="10" />
+              <circle id="selfish-node-2" class="flow-node" cx="456" cy="104" r="10" />
+              <circle id="selfish-node-3" class="flow-node" cx="560" cy="104" r="10" />
+              <text class="flow-label-small" x="174" y="136" text-anchor="middle">发送ID/公钥</text>
+              <text class="flow-label-small" x="326" y="136" text-anchor="middle">查询区块链</text>
+              <text class="flow-label-small" x="456" y="136" text-anchor="middle">身份匹配</text>
+              <text class="flow-label-small" x="560" y="136" text-anchor="middle">加入黑名单</text>
+
+              <rect class="flow-card-bg" x="16" y="204" width="588" height="140" rx="18" />
+              <rect class="flow-card-accent" x="16" y="204" width="5" height="140" rx="2.5" />
+              <text class="flow-label flow-heading" x="34" y="234">高频重接入攻击流程</text>
+              <text class="flow-label-long" x="34" y="258">接入间隔低于阈值时，记录违规行为并触发处置。</text>
+              <path class="flow-base" d="M74 296 L552 296" />
+              <path id="highfreq-seg-0" class="flow-active" d="M74 296 L246 296" />
+              <path id="highfreq-seg-1" class="flow-active" d="M246 296 L414 296" />
+              <path id="highfreq-seg-2" class="flow-active" d="M414 296 L552 296" />
+              <circle id="highfreq-node-0" class="flow-node" cx="246" cy="296" r="10" />
+              <circle id="highfreq-node-1" class="flow-node" cx="414" cy="296" r="10" />
+              <circle id="highfreq-node-2" class="flow-node" cx="552" cy="296" r="10" />
+              <text class="flow-label-small" x="246" y="326" text-anchor="middle">高频重接入</text>
+              <text class="flow-label-small" x="414" y="326" text-anchor="middle">记录违规</text>
+              <text class="flow-label-small" x="552" y="326" text-anchor="middle">加入黑名单</text>
+            </svg>
+            <svg class="flow-svg" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" aria-label="攻击处置流程图">
               <text class="flow-label-small flow-heading" x="70" y="28">自私接入攻击流程</text>
+              <!-- 自私接入攻击流程底色线 -->
               <path class="flow-base" d="M60 62 L760 62" />
 
+              <!-- 自私接入攻击流程动画段 1-4 -->
               <path id="selfish-seg-0" class="flow-active" d="M60 62 L150 62" />
               <path id="selfish-seg-1" class="flow-active" d="M150 62 L350 62" />
               <path id="selfish-seg-2" class="flow-active" d="M350 62 L550 62" />
               <path id="selfish-seg-3" class="flow-active" d="M550 62 L760 62" />
 
+              <!-- 自私接入攻击流程节点 1-4 -->
               <circle id="selfish-node-0" class="flow-node" cx="150" cy="62" r="10" />
               <circle id="selfish-node-1" class="flow-node" cx="350" cy="62" r="10" />
               <circle id="selfish-node-2" class="flow-node" cx="550" cy="62" r="10" />
@@ -770,32 +1160,38 @@
               <text class="flow-label-small" x="550" y="116" text-anchor="middle">匹配信息</text>
               <text class="flow-label-small" x="760" y="116" text-anchor="middle">加入黑名单</text>
 
-              <text class="flow-label-small flow-heading" x="70" y="154">高频重接入攻击流程</text>
-              <path class="flow-base" d="M80 184 L680 184" />
+              <text class="flow-label-small flow-heading" x="70" y="218">高频重接入攻击流程</text>
+              <!-- 高频重接入攻击流程底色线 -->
+              <path class="flow-base" d="M80 248 L680 248" />
 
-              <path id="highfreq-seg-0" class="flow-active" d="M80 184 L180 184" />
-              <path id="highfreq-seg-1" class="flow-active" d="M180 184 L430 184" />
-              <path id="highfreq-seg-2" class="flow-active" d="M430 184 L680 184" />
+              <!-- 高频重接入攻击流程动画段 1-3 -->
+              <path id="highfreq-seg-0" class="flow-active" d="M80 248 L180 248" />
+              <path id="highfreq-seg-1" class="flow-active" d="M180 248 L430 248" />
+              <path id="highfreq-seg-2" class="flow-active" d="M430 248 L680 248" />
 
-              <circle id="highfreq-node-0" class="flow-node" cx="180" cy="184" r="10" />
-              <circle id="highfreq-node-1" class="flow-node" cx="430" cy="184" r="10" />
-              <circle id="highfreq-node-2" class="flow-node" cx="680" cy="184" r="10" />
+              <!-- 高频重接入攻击流程节点 1-3 -->
+              <circle id="highfreq-node-0" class="flow-node" cx="180" cy="248" r="10" />
+              <circle id="highfreq-node-1" class="flow-node" cx="430" cy="248" r="10" />
+              <circle id="highfreq-node-2" class="flow-node" cx="680" cy="248" r="10" />
 
-              <text class="flow-label-small" x="180" y="228" text-anchor="middle">高频重接入</text>
-              <text class="flow-label-small" x="430" y="228" text-anchor="middle">记录违规行为</text>
-              <text class="flow-label-small" x="680" y="228" text-anchor="middle">加入黑名单</text>
+              <text class="flow-label-small" x="180" y="300" text-anchor="middle">高频重接入</text>
+              <text class="flow-label-small" x="430" y="300" text-anchor="middle">记录违规行为</text>
+              <text class="flow-label-small" x="680" y="300" text-anchor="middle">加入黑名单</text>
             </svg>
           </div>
         </div>
       </article>
 
+      <!-- 右下命令行日志区域 -->
       <article class="right-panel">
+        <!-- 攻击分析终端日志 -->
         <section class="log-box">
           <h3 class="log-title">攻击分析终端日志</h3>
           <ul class="log-content" id="analysis-log"></ul>
           <p class="log-metric" id="analysis-metric">攻击分析测试识别率：--</p>
         </section>
 
+        <!-- 处置记录终端日志 -->
         <section class="log-box">
           <h3 class="log-title">处置记录终端日志</h3>
           <ul class="log-content" id="dispose-log"></ul>
@@ -927,9 +1323,23 @@
       function appendLog(target, device, message) {
         const li = document.createElement('li');
         const dot = document.createElement('span');
+        const line = document.createElement('span');
+        const time = document.createElement('span');
+        const deviceTag = document.createElement('span');
+        const messageText = document.createElement('span');
         dot.className = 'dot';
+        line.className = 'log-line';
+        time.className = 'log-time';
+        deviceTag.className = 'log-device';
+        messageText.className = 'log-message';
+        time.textContent = '[' + nowTime() + ']';
+        deviceTag.textContent = '[' + device + ']';
+        messageText.textContent = message;
         li.appendChild(dot);
-        li.appendChild(document.createTextNode('[' + nowTime() + '] [' + device + '] ' + message));
+        line.appendChild(time);
+        line.appendChild(deviceTag);
+        line.appendChild(messageText);
+        li.appendChild(line);
         target.appendChild(li);
         target.scrollTop = target.scrollHeight;
       }
@@ -1032,19 +1442,19 @@
         // 清空并填充选项
         blacklistSelect.innerHTML = '';
         if (totalBlacklist.length === 0) {
-          const opt = document.createElement('option');
+          const opt = document.createElement('span');
           opt.textContent = '—';
-          opt.disabled = true;
+          opt.className = 'blacklist-empty';
           blacklistSelect.appendChild(opt);
         } else {
           totalBlacklist.forEach(id => {
-            const opt = document.createElement('option');
-            opt.value = id;
+            const opt = document.createElement('span');
+            opt.className = 'blacklist-id-chip';
             opt.textContent = id;
+            opt.setAttribute('role', 'listitem');
             blacklistSelect.appendChild(opt);
           });
           // 选中最后一项并滚动到可见
-          blacklistSelect.selectedIndex = totalBlacklist.length - 1;
           blacklistSelect.scrollTop = blacklistSelect.scrollHeight;
         }
       }
